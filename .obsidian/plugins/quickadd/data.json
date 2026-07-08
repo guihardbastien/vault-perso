@@ -1,0 +1,89 @@
+{
+  "choices": [
+    {
+      "id": "3f1c9a4e-7b2d-4e8a-9c11-sport-demarrer",
+      "name": "🏋️ Sport : Démarrer une séance",
+      "type": "Macro",
+      "command": true,
+      "runOnStartup": false,
+      "macro": {
+        "id": "8a2b5c1d-4e6f-4a9b-8c33-sport-demarrer",
+        "name": "🏋️ Sport : Démarrer une séance",
+        "commands": [
+          {
+            "id": "5d7e9f2a-1b3c-4d5e-9a77-sport-demarrer",
+            "name": "Sport/_scripts/quickadd/demarrerSeance.js",
+            "type": "UserScript",
+            "path": "Sport/_scripts/quickadd/demarrerSeance.js",
+            "settings": {}
+          }
+        ]
+      }
+    },
+    {
+      "id": "6b4d2e8f-9a1c-4f7b-8d22-sport-serie",
+      "name": "➕ Sport : Ajouter une série",
+      "type": "Macro",
+      "command": true,
+      "runOnStartup": false,
+      "macro": {
+        "id": "9c5e3f1a-2b4d-4e6f-9b44-sport-serie",
+        "name": "➕ Sport : Ajouter une série",
+        "commands": [
+          {
+            "id": "2e8f6a4b-3c5d-4f7e-8c55-sport-serie",
+            "name": "Sport/_scripts/quickadd/ajouterSerie.js",
+            "type": "UserScript",
+            "path": "Sport/_scripts/quickadd/ajouterSerie.js",
+            "settings": {}
+          }
+        ]
+      }
+    },
+    {
+      "id": "7c5e3f9a-8b2d-4a6c-9e33-sport-terminer",
+      "name": "✅ Sport : Terminer la séance",
+      "type": "Macro",
+      "command": true,
+      "runOnStartup": false,
+      "macro": {
+        "id": "1d6f4a2b-5c7e-4b8f-8a66-sport-terminer",
+        "name": "✅ Sport : Terminer la séance",
+        "commands": [
+          {
+            "id": "4f9a7b5c-6d8e-4c9f-9b88-sport-terminer",
+            "name": "Sport/_scripts/quickadd/terminerSeance.js",
+            "type": "UserScript",
+            "path": "Sport/_scripts/quickadd/terminerSeance.js",
+            "settings": {}
+          }
+        ]
+      }
+    }
+  ],
+  "inputPrompt": "single-line",
+  "devMode": false,
+  "templateFolderPaths": ["Sport/Modèles"],
+  "announceUpdates": "major",
+  "version": "2.19.0",
+  "disableOnlineFeatures": true,
+  "enableRibbonIcon": true,
+  "migrations": {
+    "migrateToMacroIDFromEmbeddedMacro": true,
+    "useQuickAddTemplateFolder": true,
+    "incrementFileNameSettingMoveToDefaultBehavior": true,
+    "consolidateFileExistsBehavior": true,
+    "repairTemplateFileExistsBehavior": true,
+    "mutualExclusionInsertAfterAndWriteToBottomOfFile": true,
+    "setVersionAfterUpdateModalRelease": true,
+    "addDefaultAIProviders": true,
+    "removeMacroIndirection": true,
+    "migrateFileOpeningSettings": true,
+    "backfillFileOpeningDefaults": true,
+    "setProviderModelDiscoveryMode": true,
+    "migrateProviderApiKeysToSecretStorage": true,
+    "migrateToMultipleTemplateFolders": true,
+    "refreshStaleDefaultModelSeeds": true,
+    "pinAiModelRefs": true
+  }
+}

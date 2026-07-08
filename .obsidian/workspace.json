@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Recettes/Journée type.md",
+                "file": "Sport/Séances/2026-07-08 Pull.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Journée type"
+              "title": "2026-07-08 Pull"
             }
           }
         ]
@@ -174,6 +174,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "quickadd:QuickAdd": false,
       "switcher:Ouvrir le sélecteur rapide": false,
       "graph:Ouvrir la vue graphique": false,
       "canvas:Créer une nouvelle toile": false,
@@ -185,11 +186,30 @@
   },
   "active": "5be393408a263cda",
   "lastOpenFiles": [
-    "Santé/Macronutriments.md",
+    "Sport/Progression exercices.md",
+    "Sport/Historique.md",
+    "Sport/Séances/2026-07-04 Legs.md",
+    "Sport/Séances/2026-07-08 Pull.md",
+    "Sport/Sport.md",
+    "Sport/Métriques types de séance.md",
+    "Sport/Types de séance/Legs.md",
+    "Sport/Séances/2026-07-08 Push.md",
+    "Sport/Séances/2026-07-01 Push.md",
+    "Sport/Modèles/Séance.md",
+    "Sport/Types de séance/Push.md",
+    "Sport/Types de séance/Pull.md",
+    "Sport/_scripts/quickadd/terminerSeance.js",
+    "Sport/_scripts/quickadd/ajouterSerie.js",
+    "Sport/_scripts/quickadd/demarrerSeance.js",
+    "Sport/_scripts/historique/view.js",
+    "Sport/_scripts/types/view.js",
+    "Sport/_scripts/type-detail/view.js",
     "Recettes/Aliments.md",
+    "Sport/_scripts/progression/view.js",
     "Recettes/Journée type.md",
-    "Recettes/Journée type.md.tmp.2358.c5de018cbf4f",
-    "Recettes",
-    "Santé"
+    "Sport/_scripts/recap/view.js",
+    "Sport/_scripts/seance/view.js",
+    "Sport/_scripts/lib/view.js",
+    "Santé/Macronutriments.md"
   ]
 }
