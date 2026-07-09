@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Sport/Séances/2026-07-08 Pull.md",
+                "file": "Recettes/Aliments.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2026-07-08 Pull"
+              "title": "Aliments"
             }
           }
         ]
@@ -186,17 +186,26 @@
   },
   "active": "5be393408a263cda",
   "lastOpenFiles": [
-    "Sport/Progression exercices.md",
+    "Recettes/Journée type.md",
+    "Santé/Macronutriments.md",
+    "Sport/Types de séance/Chest - léger.md",
     "Sport/Historique.md",
-    "Sport/Séances/2026-07-04 Legs.md",
-    "Sport/Séances/2026-07-08 Pull.md",
+    "Sport/Progression exercices.md",
     "Sport/Sport.md",
     "Sport/Métriques types de séance.md",
+    "Sport/Séances/2026-07-09 Chest - léger.md",
+    "Sport/Types de séance/Jambes.md",
     "Sport/Types de séance/Legs.md",
-    "Sport/Séances/2026-07-08 Push.md",
-    "Sport/Séances/2026-07-01 Push.md",
-    "Sport/Modèles/Séance.md",
+    "Sport/Séances/2026-07-09 Jambes.md",
     "Sport/Types de séance/Push.md",
+    "Sport/Modèles/Séance.md",
+    "Sport/_scripts/quickadd/nouveauType.js",
+    "Jambes.md",
+    "Sport/Séances/2026-07-01 Push.md",
+    "Sport/Séances/2026-07-08 Legs.md",
+    "Sport/Séances/2026-07-08 Pull.md",
+    "Sport/Séances/2026-07-04 Legs.md",
+    "Sport/Séances/2026-07-08 Push.md",
     "Sport/Types de séance/Pull.md",
     "Sport/_scripts/quickadd/terminerSeance.js",
     "Sport/_scripts/quickadd/ajouterSerie.js",
@@ -206,10 +215,7 @@
     "Sport/_scripts/type-detail/view.js",
     "Recettes/Aliments.md",
     "Sport/_scripts/progression/view.js",
-    "Recettes/Journée type.md",
     "Sport/_scripts/recap/view.js",
-    "Sport/_scripts/seance/view.js",
-    "Sport/_scripts/lib/view.js",
-    "Santé/Macronutriments.md"
+    "Sport/_scripts/seance/view.js"
   ]
 }
