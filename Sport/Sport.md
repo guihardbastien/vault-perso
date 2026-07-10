@@ -21,6 +21,5 @@ Les notes restent du markdown lisible : tu peux aussi ajouter ou corriger une s�
 
 Un type = une note dans `Sport/Types de séance/` avec la liste `exercices` dans le frontmatter (ordre respecté au démarrage). Crée une note par type d'entraînement ; sa page affiche automatiquement l'historique et les graphiques du type.
 
-- [[Sport/Types de séance/Push|Push]] · [[Sport/Types de séance/Pull|Pull]] · [[Sport/Types de séance/Legs|Legs]]
 
 > [!tip] Les trois séances actuelles dans `Sport/Séances/` sont des exemples pour vérifier les vues — supprime-les quand tu commences à logger.
