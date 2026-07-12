@@ -18,7 +18,7 @@ if (!sessions.length) {
       const fun = lib.funAvg(sets);
       const obj = Number(p.objectif) || null;
       const objCell = obj ? `${lib.fmtNum(obj)} ${total >= obj ? "✅" : "❌"}` : "—";
-      const typePath = `Sport/Types de séance/${String(p.type)}.md`;
+      const typePath = `${lib.personRoot(dv)}/Types de séance/${String(p.type)}.md`;
       return (
         `<tr style="border-top:1px solid var(--background-modifier-border);">` +
         `<td style="padding:4px 14px 4px 0;white-space:nowrap;">${lib.ilink(p.file.path, lib.pageDateStr(p))}</td>` +

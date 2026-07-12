@@ -40,10 +40,17 @@ function sortKey(p) {
   return pageDateStr(p) + "T" + String(p.debut ?? "00:00");
 }
 
-/* Toutes les séances (pages de Sport/Séances avec type + date), triées chronologiquement. */
+/* Racine de la personne dont dépend la note courante : "Sport/Athlètes/<Personne>".
+   Fonctionne depuis toute note d'un dossier personne (Historique, type, séance…). */
+function personRoot(dv) {
+  return dv.current().file.path.split("/").slice(0, 3).join("/");
+}
+
+/* Toutes les séances de la personne courante (pages de Sport/Athlètes/<Personne>/Séances
+   avec type + date), triées chronologiquement. */
 function sessionsAsc(dv) {
   return dv
-    .pages('"Sport/Séances"')
+    .pages(`"${personRoot(dv)}/Séances"`)
     .values.filter((p) => p.type && p.date)
     .sort((a, b) => (sortKey(a) < sortKey(b) ? -1 : 1));
 }
@@ -217,6 +224,7 @@ Object.assign(input, {
   funStr,
   humeurLabel,
   pageDateStr,
+  personRoot,
   sessionsAsc,
   getSets,
   funAvg,

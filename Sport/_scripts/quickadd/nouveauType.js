@@ -1,10 +1,19 @@
 /* QuickAdd — 🆕 Sport : Nouveau type de séance
-   Demande le nom du type puis la liste des exercices (un par un, vide pour
-   terminer) et crée la note dans Sport/Types de séance/. */
+   Choix de la personne, nom du type, puis la liste des exercices (un par un,
+   vide pour terminer) et crée la note dans Sport/Athlètes/<Personne>/Types de séance/. */
 
-const DOSSIER_TYPES = "Sport/Types de séance";
+const DOSSIER_ATHLETES = "Sport/Athlètes";
 
 const nfc = (s) => String(s).normalize("NFC");
+
+/* Dossiers directement sous Sport/Athlètes/ = les personnes. */
+function personnes(app, obsidian) {
+  const racine = app.vault.getAbstractFileByPath(DOSSIER_ATHLETES);
+  return (racine?.children ?? [])
+    .filter((f) => f instanceof obsidian.TFolder)
+    .map((f) => f.name)
+    .sort((a, b) => a.localeCompare(b, "fr"));
+}
 
 module.exports = async (params) => {
   const { app, quickAddApi: qa } = params;
@@ -16,8 +25,19 @@ module.exports = async (params) => {
     }
   };
 
-  /* 1. Nom du type */
-  let nom = await qa.inputPrompt("Nom du type de séance", "ex : Full body");
+  /* 1. Pour qui ? */
+  const noms = personnes(app, params.obsidian);
+  if (!noms.length) {
+    notify("Aucune personne dans « Sport ». Lance d'abord « 👤 Sport : Ajouter une personne ».");
+    return;
+  }
+  const personne = noms.length === 1 ? noms[0] : await qa.suggester(noms, noms);
+  if (!personne) return;
+
+  const DOSSIER_TYPES = `${DOSSIER_ATHLETES}/${personne}/Types de séance`;
+
+  /* 2. Nom du type */
+  let nom = await qa.inputPrompt(`Nom du type de séance (${personne})`, "ex : Full body");
   if (!nom) return;
   nom = nom.trim().replace(/[\\/:*?"<>|#^[\]]/g, "");
   if (!nom) {
@@ -29,11 +49,11 @@ module.exports = async (params) => {
     .getMarkdownFiles()
     .some((f) => nfc(f.path).toLowerCase() === nfc(chemin).toLowerCase());
   if (existe) {
-    notify(`Le type « ${nom} » existe déjà.`);
+    notify(`Le type « ${nom} » existe déjà pour ${personne}.`);
     return;
   }
 
-  /* 2. Exercices, un par un (entrée vide ou Échap pour terminer) */
+  /* 3. Exercices, un par un (entrée vide ou Échap pour terminer) */
   const exercices = [];
   while (true) {
     const e = await qa.inputPrompt(
@@ -54,7 +74,7 @@ module.exports = async (params) => {
     if (!continuer) return;
   }
 
-  /* 3. Création de la note */
+  /* 4. Création de la note */
   const fmExos = exercices.length
     ? "exercices:\n" + exercices.map((e) => `  - ${e}`).join("\n")
     : "exercices: []";
@@ -78,5 +98,5 @@ module.exports = async (params) => {
 
   const file = await app.vault.create(chemin, contenu);
   await app.workspace.getLeaf(false).openFile(file);
-  notify(`🆕 Type « ${nom} » créé (${exercices.length} exercice${exercices.length > 1 ? "s" : ""}).`);
+  notify(`🆕 Type « ${nom} » créé pour ${personne} (${exercices.length} exercice${exercices.length > 1 ? "s" : ""}).`);
 };

@@ -1,9 +1,8 @@
 /* QuickAdd — 🏋️ Sport : Démarrer une séance
-   Choix du type, humeur, objectif (valeur ou +X% du dernier total),
+   Choix de la personne, du type, humeur, objectif (valeur ou +X% du dernier total),
    puis création de la note de séance depuis Sport/Modèles/Séance.md. */
 
-const DOSSIER_TYPES = "Sport/Types de séance";
-const DOSSIER_SEANCES = "Sport/Séances";
+const DOSSIER_ATHLETES = "Sport/Athlètes";
 const MODELE = "Sport/Modèles/Séance.md";
 
 const nfc = (s) => String(s).normalize("NFC");
@@ -28,6 +27,15 @@ function totalOf(content) {
   return Math.round(total * 10) / 10;
 }
 
+/* Dossiers directement sous Sport/Athlètes/ = les personnes. */
+function personnes(app, obsidian) {
+  const racine = app.vault.getAbstractFileByPath(DOSSIER_ATHLETES);
+  return (racine?.children ?? [])
+    .filter((f) => f instanceof obsidian.TFolder)
+    .map((f) => f.name)
+    .sort((a, b) => a.localeCompare(b, "fr"));
+}
+
 module.exports = async (params) => {
   const { app, quickAddApi: qa } = params;
   const notify = (msg) => {
@@ -38,10 +46,22 @@ module.exports = async (params) => {
     }
   };
 
-  /* 1. Type de séance */
+  /* 1. Pour qui ? */
+  const noms = personnes(app, params.obsidian);
+  if (!noms.length) {
+    notify("Aucune personne dans « Sport ». Lance d'abord « 👤 Sport : Ajouter une personne ».");
+    return;
+  }
+  const personne = noms.length === 1 ? noms[0] : await qa.suggester(noms, noms);
+  if (!personne) return;
+
+  const DOSSIER_TYPES = `${DOSSIER_ATHLETES}/${personne}/Types de séance`;
+  const DOSSIER_SEANCES = `${DOSSIER_ATHLETES}/${personne}/Séances`;
+
+  /* 2. Type de séance */
   const typeFiles = app.vault.getMarkdownFiles().filter((f) => inFolder(f, DOSSIER_TYPES));
   if (!typeFiles.length) {
-    notify("Aucun type de séance dans « Sport/Types de séance ». Crée d'abord un type.");
+    notify(`Aucun type de séance pour ${personne}. Crée d'abord un type (🆕 Sport : Nouveau type de séance).`);
     return;
   }
   typeFiles.sort((a, b) => a.basename.localeCompare(b.basename, "fr"));
@@ -51,7 +71,7 @@ module.exports = async (params) => {
   );
   if (!typeName) return;
 
-  /* 2. Dernière séance de ce type → total de référence */
+  /* 3. Dernière séance de ce type → total de référence */
   const sessions = app.vault
     .getMarkdownFiles()
     .filter((f) => inFolder(f, DOSSIER_SEANCES))
@@ -66,14 +86,14 @@ module.exports = async (params) => {
   let lastTotal = null;
   if (sessions.length) lastTotal = totalOf(await app.vault.cachedRead(sessions[0].f));
 
-  /* 3. Humeur */
+  /* 4. Humeur */
   const humeur = await qa.suggester(["😞 mauvais", "😐 ok", "😀 bon"], ["mauvais", "ok", "bon"]);
   if (!humeur) return;
 
-  /* 4. Objectif (obligatoire) : valeur en kg ou +X% du dernier total */
+  /* 5. Objectif (obligatoire) : valeur en kg ou +X% du dernier total */
   const header = lastTotal
-    ? `Objectif total (kg) — dernier ${typeName} : ${lastTotal} kg. Entre un nombre ou +X%`
-    : `Objectif total (kg) — première séance ${typeName}, entre un nombre`;
+    ? `Objectif total (kg) — dernier ${typeName} de ${personne} : ${lastTotal} kg. Entre un nombre ou +X%`
+    : `Objectif total (kg) — première séance ${typeName} de ${personne}, entre un nombre`;
   const raw = await qa.inputPrompt(header, "ex : 4200 ou +2%");
   if (raw == null || raw === "") return;
 
@@ -93,14 +113,14 @@ module.exports = async (params) => {
     return;
   }
 
-  /* 5. Exercices prévus depuis le type */
+  /* 6. Exercices prévus depuis le type */
   const typeFile = typeFiles.find((f) => f.basename === typeName);
   const exercices = app.metadataCache.getFileCache(typeFile)?.frontmatter?.exercices ?? [];
   const exosMd = exercices.length
     ? exercices.map((e) => `- ${e}`).join("\n")
     : "- (aucun exercice configuré dans le type)";
 
-  /* 6. Création de la note */
+  /* 7. Création de la note */
   const now = new Date();
   const date = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
   const debut = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
@@ -154,5 +174,5 @@ module.exports = async (params) => {
 
   const file = await app.vault.create(chemin, contenu);
   await app.workspace.getLeaf(false).openFile(file);
-  notify(`Séance ${typeName} démarrée — objectif ${objectif} kg 🎯`);
+  notify(`Séance ${typeName} démarrée pour ${personne} — objectif ${objectif} kg 🎯`);
 };

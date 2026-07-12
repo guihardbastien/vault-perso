@@ -1,13 +1,15 @@
 /* QuickAdd — ➕ Sport : Ajouter une série
    Formulaire : exercice, reps, poids (kg), fun (1–5), douleur optionnelle.
-   Ajoute la série dans la section « ## Séries » de la séance en cours. */
+   Ajoute la série dans la section « ## Séries » de la séance en cours —
+   fichier actif s'il est une séance, sinon choix parmi les séances ouvertes
+   (toutes personnes confondues). */
 
-const DOSSIER_TYPES = "Sport/Types de séance";
-const DOSSIER_SEANCES = "Sport/Séances";
 const AUTRE = "➕ Autre exercice…";
 
 const nfc = (s) => String(s).normalize("NFC");
-const inFolder = (f, folder) => nfc(f.path).startsWith(nfc(folder) + "/");
+const RE_SEANCE = /^Sport\/Athlètes\/[^/]+\/Séances\//;
+const isSeance = (f) => RE_SEANCE.test(nfc(f.path));
+const personneDe = (f) => nfc(f.path).split("/")[2];
 
 const num = (s) => {
   const n = parseFloat(String(s ?? "").replace(",", ".").replace(/[^\d.\-]/g, ""));
@@ -24,13 +26,13 @@ module.exports = async (params) => {
     }
   };
 
-  /* Séance cible : fichier actif s'il est dans Sport/Séances, sinon la
-     séance la plus récente sans heure de fin. */
+  /* Séance cible : fichier actif s'il est une séance, sinon les séances sans
+     heure de fin de toutes les personnes (choix si plusieurs). */
   let file = app.workspace.getActiveFile();
-  if (!file || !inFolder(file, DOSSIER_SEANCES)) {
+  if (!file || !isSeance(file)) {
     const ouvertes = app.vault
       .getMarkdownFiles()
-      .filter((f) => inFolder(f, DOSSIER_SEANCES))
+      .filter(isSeance)
       .map((f) => ({ f, fm: app.metadataCache.getFileCache(f)?.frontmatter ?? {} }))
       .filter((x) => !x.fm.fin)
       .sort((a, b) => {
@@ -38,7 +40,17 @@ module.exports = async (params) => {
         const kb = `${b.fm.date ?? ""}T${b.fm.debut ?? ""}`;
         return ka < kb ? 1 : -1;
       });
-    file = ouvertes[0]?.f ?? null;
+    if (!ouvertes.length) {
+      file = null;
+    } else if (ouvertes.length === 1) {
+      file = ouvertes[0].f;
+    } else {
+      file = await qa.suggester(
+        ouvertes.map((x) => `${personneDe(x.f)} — ${x.f.basename}`),
+        ouvertes.map((x) => x.f)
+      );
+      if (!file) return;
+    }
   }
   if (!file) {
     notify("Aucune séance en cours. Lance d'abord « 🏋️ Sport : Démarrer une séance ».");
@@ -47,10 +59,11 @@ module.exports = async (params) => {
 
   const contenu = await app.vault.cachedRead(file);
   const fm = app.metadataCache.getFileCache(file)?.frontmatter ?? {};
+  const racinePersonne = nfc(file.path).split("/").slice(0, 3).join("/");
 
   /* Choix de l'exercice : exercices du type + déjà loggés + saisie libre */
   const choix = [];
-  const typeFile = app.vault.getAbstractFileByPath(`${DOSSIER_TYPES}/${fm.type ?? ""}.md`);
+  const typeFile = app.vault.getAbstractFileByPath(`${racinePersonne}/Types de séance/${fm.type ?? ""}.md`);
   const duType = typeFile ? app.metadataCache.getFileCache(typeFile)?.frontmatter?.exercices ?? [] : [];
   for (const e of duType) if (!choix.includes(String(e))) choix.push(String(e));
   for (const m of contenu.matchAll(/\[exo::\s*([^\]]+?)\s*\]/g)) {
@@ -116,5 +129,5 @@ module.exports = async (params) => {
     return lines.join("\n");
   });
 
-  notify(`✅ ${exo} : ${reps} × ${poids} kg = ${Math.round(reps * poids * 10) / 10} kg`);
+  notify(`✅ ${personneDe(file)} · ${exo} : ${reps} × ${poids} kg = ${Math.round(reps * poids * 10) / 10} kg`);
 };

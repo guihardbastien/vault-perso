@@ -1,6 +1,26 @@
 {
   "choices": [
     {
+      "id": "5a8c3e1f-2d4b-4c6a-9f11-sport-personne",
+      "name": "👤 Sport : Ajouter une personne",
+      "type": "Macro",
+      "command": true,
+      "runOnStartup": false,
+      "macro": {
+        "id": "7b9d5f3a-4e6c-4b8d-8a22-sport-personne",
+        "name": "👤 Sport : Ajouter une personne",
+        "commands": [
+          {
+            "id": "9d1f7b5c-6a8e-4d2f-9c33-sport-personne",
+            "name": "Sport/_scripts/quickadd/ajouterPersonne.js",
+            "type": "UserScript",
+            "path": "Sport/_scripts/quickadd/ajouterPersonne.js",
+            "settings": {}
+          }
+        ]
+      }
+    },
+    {
       "id": "3f1c9a4e-7b2d-4e8a-9c11-sport-demarrer",
       "name": "🏋️ Sport : Démarrer une séance",
       "type": "Macro",

@@ -26,7 +26,7 @@ if (!sessions.length) {
     .map(([t, occ]) => {
       const last = occ[occ.length - 1];
       const record = Math.max(...occ.map((o) => o.total));
-      const typePath = `Sport/Types de séance/${t}.md`;
+      const typePath = `${lib.personRoot(dv)}/Types de séance/${t}.md`;
       return (
         `<tr style="border-top:1px solid var(--background-modifier-border);">` +
         `<td style="padding:4px 14px 4px 0;font-weight:600;">${lib.ilink(typePath, t)}</td>` +
