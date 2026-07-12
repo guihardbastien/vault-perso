@@ -6,13 +6,14 @@ await dv.view("Sport/_scripts/lib", lib);
 
 const p = dv.current();
 const el = dv.el("div", "");
-const sets = lib.getSets(p);
+const sets = lib.getSetsFor(dv, p);
 
 if (!sets.length) {
   el.innerHTML = `<em>Le récap apparaîtra quand des séries auront été enregistrées.</em>`;
 } else {
   const groups = lib.groupSets(sets);
-  const total = groups.reduce((s, g) => s + g.total, 0);
+  const sum = lib.sumSets(sets);
+  const total = sum.kg;
   const fun = lib.funAvg(sets);
   const dur = lib.durationMin(p);
   const obj = Number(p.objectif) || null;
@@ -32,15 +33,21 @@ if (!sets.length) {
   lines.push("");
 
   for (const g of groups) {
-    lines.push(`▪ ${g.exo} — ${lib.fmtKg(g.total)} · fun ${lib.funStr(g.fun)}`);
+    lines.push(`▪ ${g.exo} — ${lib.groupMain(g).str} · fun ${lib.funStr(g.fun)}`);
     for (const s of g.sets) {
       const pain = lib.painStr(s);
-      lines.push(`   ${s.reps} × ${lib.fmtKg(s.poids)} · fun ${lib.funStr(s.fun)}${pain ? " · " + pain : ""}`);
+      lines.push(`   ${lib.setDesc(s)} · fun ${lib.funStr(s.fun)}${pain ? " · " + pain : ""}`);
     }
   }
 
   lines.push("");
-  lines.push(`TOTAL : ${lib.fmtKg(total)} · fun ${lib.funStr(fun)} · ${sets.length} séries`);
+  const cumuls = [lib.fmtKg(total)];
+  if (sum.min > 0) cumuls.push(lib.fmtDuration(sum.min));
+  if (sum.km > 0) cumuls.push(lib.fmtKm(sum.km));
+  lines.push(`TOTAL : ${cumuls.join(" · ")} · fun ${lib.funStr(fun)} · ${sets.length} séries`);
+  if (sum.pdcInconnu) {
+    lines.push(`⚠️ ${sum.pdcInconnu} série(s) au poids de corps sans pesée (total kg incomplet)`);
+  }
 
   const text = lines.join("\n");
 

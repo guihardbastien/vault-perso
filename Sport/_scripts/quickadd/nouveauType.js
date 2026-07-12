@@ -6,6 +6,9 @@ const DOSSIER_ATHLETES = "Sport/Athlètes";
 
 const nfc = (s) => String(s).normalize("NFC");
 
+/* Première lettre en majuscule, le reste inchangé. */
+const cap = (s) => (s ? s.charAt(0).toLocaleUpperCase("fr") + s.slice(1) : s);
+
 /* Dossiers directement sous Sport/Athlètes/ = les personnes. */
 function personnes(app, obsidian) {
   const racine = app.vault.getAbstractFileByPath(DOSSIER_ATHLETES);
@@ -61,7 +64,7 @@ module.exports = async (params) => {
       exercices.length === 0 ? "ex : Squat" : "vide = terminé"
     );
     if (!e || !e.trim()) break;
-    const propre = e.trim();
+    const propre = cap(e.trim());
     if (!exercices.some((x) => nfc(x).toLowerCase() === nfc(propre).toLowerCase())) {
       exercices.push(propre);
     }

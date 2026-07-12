@@ -6,14 +6,15 @@ await dv.view("Sport/_scripts/lib", lib);
 
 const p = dv.current();
 const el = dv.el("div", "");
-const sets = lib.getSets(p);
+const sets = lib.getSetsFor(dv, p);
 
 if (!sets.length) {
   el.innerHTML =
     `<em>Aucune série pour l'instant — lance la commande <strong>« ➕ Sport : Ajouter une série »</strong> (Cmd+P).</em>`;
 } else {
   const groups = lib.groupSets(sets);
-  const total = groups.reduce((s, g) => s + g.total, 0);
+  const sum = lib.sumSets(sets);
+  const total = sum.kg;
   const fun = lib.funAvg(sets);
   const dur = lib.durationMin(p);
   const obj = Number(p.objectif) || null;
@@ -41,10 +42,19 @@ if (!sets.length) {
   html +=
     `<div style="display:flex;gap:1.6em;flex-wrap:wrap;align-items:baseline;margin-bottom:0.6em;">` +
     `<span>Total séance : <strong style="font-size:1.25em;">${lib.fmtKg(total)}</strong></span>` +
+    (sum.min > 0 ? `<span>Effort : <strong>${lib.fmtDuration(sum.min)}</strong></span>` : "") +
+    (sum.km > 0 ? `<span>Distance : <strong>${lib.fmtKm(sum.km)}</strong></span>` : "") +
     `<span>Fun : <strong>${lib.funStr(fun)}</strong>/5</span>` +
     `<span>Humeur : ${lib.humeurLabel(p.humeur)}</span>` +
     `<span>${p.fin ? "⏱ " + lib.fmtDuration(dur) : "⏱ séance en cours…"}</span>` +
     `</div>`;
+
+  if (sum.pdcInconnu) {
+    html +=
+      `<div style="color:var(--text-error);font-size:0.85em;margin-bottom:0.6em;">` +
+      `⚠️ ${sum.pdcInconnu} série${sum.pdcInconnu > 1 ? "s" : ""} au poids de corps sans pesée — ` +
+      `lance « ⚖️ Sport : Ajouter le poids » pour compléter le total.</div>`;
+  }
 
   for (const g of groups) {
     const rows = g.sets
@@ -53,8 +63,8 @@ if (!sets.length) {
         return (
           `<tr>` +
           `<td style="color:var(--text-muted);padding:1px 10px 1px 0;">${i + 1}</td>` +
-          `<td style="padding:1px 10px 1px 0;">${s.reps} × ${lib.fmtKg(s.poids)}</td>` +
-          `<td style="padding:1px 10px 1px 0;">= ${lib.fmtKg(s.total)}</td>` +
+          `<td style="padding:1px 10px 1px 0;">${lib.esc(lib.setDesc(s))}</td>` +
+          `<td style="padding:1px 10px 1px 0;">${s.total != null ? "= " + lib.fmtKg(s.total) : s.kind === "pdc" ? "= —" : ""}</td>` +
           `<td style="padding:1px 10px 1px 0;">fun ${lib.funStr(s.fun)}</td>` +
           `<td style="padding:1px 0;color:var(--text-error);">${lib.esc(pain)}</td>` +
           `</tr>`
@@ -67,7 +77,7 @@ if (!sets.length) {
       `padding:10px 14px;margin-bottom:10px;">` +
       `<div style="display:flex;justify-content:space-between;align-items:baseline;gap:1em;flex-wrap:wrap;">` +
       `<span style="font-weight:600;font-size:1.05em;">${lib.esc(g.exo)}</span>` +
-      `<span style="font-size:1.9em;font-weight:800;color:var(--text-accent);white-space:nowrap;">${lib.fmtKg(g.total)}</span>` +
+      `<span style="font-size:1.9em;font-weight:800;color:var(--text-accent);white-space:nowrap;">${lib.groupMain(g).str}</span>` +
       `</div>` +
       `<div style="color:var(--text-muted);font-size:0.85em;margin-bottom:4px;">` +
       `fun ${lib.funStr(g.fun)}/5 · ${g.sets.length} série${g.sets.length > 1 ? "s" : ""}</div>` +

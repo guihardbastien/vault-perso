@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Sport/Athlètes/Alain/Progression exercices.md",
+                "file": "Recettes/Aliments.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Progression exercices"
+              "title": "Aliments"
             }
           }
         ]
@@ -186,41 +186,41 @@
   },
   "active": "5be393408a263cda",
   "lastOpenFiles": [
-    "Sport/Athlètes/Alain/Métriques types de séance.md",
-    "Sport/Athlètes/Alain/Historique.md",
+    "Recettes/Journée type.md",
+    "Recettes/Aliments.md",
+    "Santé/Macronutriments.md",
+    "Sport/Athlètes/Bastien/Progression exercices.md",
     "Sport/Athlètes/Alain/Séances/2026-07-12 Vendredi.md",
-    "Sport/Athlètes/Alain/Types de séance/Vendredi.md",
-    "Sport/Athlètes/Alain/Séances/2026-07-12 Mercredi.md",
+    "Sport/Athlètes/Bastien/Poids.md",
+    "Sport/Athlètes/Bastien/Métriques types de séance.md",
+    "Sport/Athlètes/Bastien/Historique.md",
+    "Sport/Athlètes/Bastien/Séances/2026-07-12 Dos.md",
+    "Sport/Athlètes/Bastien/Types de séance/Dos.md",
     "Sport/Athlètes/Alain/Progression exercices.md",
+    "Sport/Athlètes/Alain/Métriques types de séance.md",
+    "Sport/Athlètes/Alain/Poids.md",
+    "Sport/Athlètes/Alain/Séances/2026-07-12 Mercredi.md",
+    "Sport/Athlètes/Alain/Séances/2026-07-12 Mercredi (2).md",
+    "Sport/_scripts/poids/view.js",
+    "Sport/_scripts/poids",
+    "Sport/_scripts/quickadd/ajouterPoids.js",
+    "Sport/Spec — Types d'exercices étendus.md",
+    "Sport/Prompt — Grill spec types d'exercices.md",
+    "Sport/Athlètes/Alain/Types de séance/Mercredi.md",
+    "Sport/Athlètes/Alain/Historique.md",
+    "Sport/Athlètes/Alain/Types de séance/Vendredi.md",
     "Sport/Alain/Alain.md",
     "Sport/Athlètes/Bastien/Types de séance/Jambes.md",
-    "Sport/Athlètes/Bastien/Types de séance/Dos.md",
     "Sport/Athlètes/Bastien/Types de séance/Chest - léger.md",
     "Sport/Athlètes/Bastien/Types de séance/Bras.md",
     "Sport/Athlètes/Bastien/Séances/2026-07-09 Jambes.md",
     "Sport/Athlètes/Bastien/Séances/2026-07-09 Chest - léger.md",
-    "Sport/Athlètes/Alain/Types de séance/Mercredi.md",
     "Sport/Athlètes/Bastien/Types de séance",
     "Sport/Athlètes/Bastien/Séances",
-    "Sport/Athlètes/Bastien/Progression exercices.md",
-    "Sport/Athlètes/Bastien/Métriques types de séance.md",
-    "Sport/Athlètes/Bastien/Historique.md",
-    "Sport/Athlètes/Bastien/Bastien.md",
     "Sport/Athlètes/Alain/Types de séance",
     "Sport/Athlètes/Alain/Séances",
-    "Sport/Athlètes/Alain/Alain.md",
     "Sport/Athlètes/Bastien",
     "Sport/Athlètes/Alain",
-    "Sport/Athlètes",
-    "Sport/Bastien/Progression exercices.md",
-    "Sport/Alain/Progression exercices.md",
-    "Sport/Alain/Métriques types de séance.md",
-    "Sport/Alain/Historique.md",
-    "Sport/Alain/Séances/2026-07-12 Mercredi.md",
-    "Sport/Alain/Types de séance/Mercredi.md",
-    "Sport/Alain/Types de séance",
-    "Sport/Alain/Séances",
-    "Sport/Alain",
-    "Sport/Bastien/Bastien.md"
+    "Sport/Athlètes"
   ]
 }

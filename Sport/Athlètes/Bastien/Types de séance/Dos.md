@@ -2,7 +2,6 @@
 exercices:
   - Tractions serviette
   - Tirage épaules
-  - SDT jambes tendus
 ---
 
 # Dos

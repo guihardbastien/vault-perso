@@ -1,8 +1,8 @@
 ---
 exercices:
   - Squat
-  - burpees
-  - gainage
+  - Burpees
+  - Gainage
 ---
 
 # Mercredi

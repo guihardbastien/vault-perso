@@ -81,6 +81,26 @@
       }
     },
     {
+      "id": "4e2a8c6d-1f3b-4d9e-8b77-sport-poids",
+      "name": "⚖️ Sport : Ajouter le poids",
+      "type": "Macro",
+      "command": true,
+      "runOnStartup": false,
+      "macro": {
+        "id": "9f4b6d2e-3a5c-4e7f-9c88-sport-poids",
+        "name": "⚖️ Sport : Ajouter le poids",
+        "commands": [
+          {
+            "id": "7a3c5e1f-8b4d-4f6a-8d99-sport-poids",
+            "name": "Sport/_scripts/quickadd/ajouterPoids.js",
+            "type": "UserScript",
+            "path": "Sport/_scripts/quickadd/ajouterPoids.js",
+            "settings": {}
+          }
+        ]
+      }
+    },
+    {
       "id": "7c5e3f9a-8b2d-4a6c-9e33-sport-terminer",
       "name": "✅ Sport : Terminer la séance",
       "type": "Macro",
